@@ -27,7 +27,7 @@ import java.util.*;
 
 /**
  *
- * @author Acer
+ * @author Sanket,Rithwik,Siddhant
  */
 public class DS {
 
@@ -37,12 +37,12 @@ public class DS {
     public static void main(String args[]) {
         Scanner sc = new Scanner(System.in);
       
-        String s = sc.nextLine(); //input string
+        String s = sc.nextLine();                                               //input string
         //System.out.println(s);
         int l = s.length();
-        String infix[]=new String[100]; // infix string
+        String infix[]=new String[100];                                         // infix string
         int j=0;
-        for(int i=0 ; i < s.length() ; i++) { //converts input to infix
+        for(int i=0 ; i < s.length() ; i++) {                                   //converts input to infix
             char c = s.charAt(i);
             if(infix[j] == null) {
                 infix[j] = "";
@@ -71,7 +71,7 @@ public class DS {
             boolean b = infix[k].equals(Character.toString('-'));
             boolean c = infix[k].equals(Character.toString('*'));
             boolean d = infix[k].equals(Character.toString('/'));
-            if(a || b || c || d){
+            if(a || b || c || d) {
                 inst = post.choice((String) o.peek());
                 incm = post.choice(infix[k]);
                 //System.out.print(inst +" "+ incm);
@@ -83,7 +83,6 @@ public class DS {
                 o.push(infix[k]);       
                 //System.out.println("Test1" + o + pf[i]);
             }
-            
             else {
                 pf[i] = (infix[k]);
                 //System.out.println("Test2" + o + pf[i]);
@@ -97,13 +96,64 @@ public class DS {
             inst = post.choice((String) o.peek());
             i++;
         }
-        
         //System.out.println(o+"stack");
         i = 0;
-        while(pf[i] != null) {
-             System.out.print("(" + pf[i] + ")");
-             i++;
+        System.out.print("Prefix: ");
+        while(infix[i] != null) {
+            System.out.print("(" + infix[i] + ")");
+            i++;
         }
+        System.out.print("\n");
+        i = 0;
+        System.out.print("Postfix: ");
+        while(pf[i] != null) {
+            System.out.print("(" + pf[i] + ")");
+            i++;
+        }
+        System.out.print("\n");
+        //Stack eval = new Stack();
+        i = 0;
+        j = -1;
+        double ans[] = new double[10];
+        while(pf[i] != null) {
+            boolean a = pf[i].equals(Character.toString('+'));
+            boolean b = pf[i].equals(Character.toString('-'));
+            boolean c = pf[i].equals(Character.toString('*'));
+            boolean d = pf[i].equals(Character.toString('/'));
+            if(a || b || c || d) {
+                switch(pf[i]) {
+                    case "+":
+                        //System.out.println("Test4"+" "+ans[j]+" "+j);
+                        j--;
+                        ans[j] = ans[j] + ans[j+1];
+                        //System.out.println("Test5"+" "+ans[j]+" "+j);
+                        break;
+                        
+                    case "-":
+                        j--;
+                        ans[j] = ans[j] - ans[j+1];
+                        break;
+                        
+                    case "/":
+                        j--;
+                        ans[j] = ans[j] / ans[j+1];
+                        break;
+                      
+                    case "*":  
+                        j--;
+                        ans[j] = ans[j] * ans[j+1];
+                        break;                
+                }
+            }
+            else {
+                //eval.push(Double.parseDouble(pf[i]));
+                j++;
+                ans[j] = Double.parseDouble(pf[i]);
+                //System.out.println("Test3"+" "+ans[j]+" "+j);
+            }
+            i++;
+        }
+        System.out.println("Answer: "+ans[0]/*+" "+ans[1]+" "+ans[2]+" "+ans[3]+" "+ans[4]*/);
     }
 }
 
