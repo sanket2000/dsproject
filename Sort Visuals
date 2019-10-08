@@ -1,17 +1,24 @@
 #include<stdio.h>
-#define N 50
+#include<stdlib.h>
+#define KGRN  "\x1B[32m"
+#define KWHT  "\x1B[37m"
+#define N 75
 
 int a[N];
 
-void display() {
+void display(int k) {
     for(int i = 0; i<N; i++) {
         printf("%3d ",a[i]);
         for(int j = 0; j<a[i]; j++)
-            printf(" *");
+            if(k == i) {
+                //textcolor(4);
+                printf(" %sS",KGRN);
+            } else
+                printf(" %s*",KWHT);
         printf("\n");
     }
     //sleep();
-    int d = 50000000;
+    int d = 10000000;
     for(int i = 0; i < d; i++) {}
 }
 
@@ -27,7 +34,7 @@ void bSort() {
             if(a[j] > a[j+1]) {
                 swap(j, j+1);
                 system("clear");
-                display();
+                display(j+1);
             }
         }
     }
@@ -41,10 +48,12 @@ void insertionSort() {
         while(a[j] > temp && j >= 0) {
             a[j+1] = a[j];
             j--;
+            system("clear");
+            display(j+1);
         }
         a[j+1] = temp;
-        system("clear");
-        display();
+        //system("clear");
+        //display(j);
     }
 }
 
@@ -57,9 +66,13 @@ void merge(int beg, int mid, int end) {
         if(a[i] < a[j]) {
             temp[index] = a[i];
             i++;
+            system("clear");
+            display(i);
         }else {
             temp[index] = a[j];
             j++;
+            system("clear");
+            display(j);
         }
         index++;
     }
@@ -67,8 +80,114 @@ void merge(int beg, int mid, int end) {
         temp[index] = a[j];
         j++;
         index++;
+        system("clear");
+        display(j);
     }
     while(i <= mid) {
+        temp[index] = a[i];
+        i++;
+        index++;
+        system("clear");
+        display(i);
+    }
+    index = 0;
+    for(i = beg; i <= end; i++, index++) {
+        a[i] = temp[index];
+        system("clear");
+        display(i);
+    }
+}
+
+void mergeSort(int beg, int end) {
+    if(beg < end) {
+        int mid = (beg + end) / 2;
+        mergeSort(beg, mid);
+        mergeSort(mid + 1, end);
+        merge(beg, mid, end);
+    }
+}
+
+int partition(int low, int high) {
+    int i, j, x;
+    i = low;
+    x = a[low];
+    j = high;
+    while(i <= j) {
+        while(a[i] <= x && i <= high) {
+            i++;
+        }
+        while(a[j] > x) {
+            j--;
+        }
+        if(i < j) {
+            swap(i, j);
+        }
+    }
+    a[low] = a[j];
+    a[j] = x;
+    system("clear");
+    display(j);
+    return j;
+}
+
+void quickSort(int low, int high) {
+    int j;
+    if(low < high) {
+        j = partition(low, high);
+        quickSort(low, j-1);
+        quickSort(j+1, high);
+    }
+}
+
+int main() {
+	//for(int j=0 ; j<N ; j++)
+		//scanf("%d",&a[j]);
+    int i;
+    //for(i = 0; i < N; i++)
+        //a[i] = rand() % N;//N - i - 1;
+	system("clear");
+	printf("cleared\n");
+	display(-1);
+	system("clear");
+	printf("1.BestCase not for mergeSort ;)\n2.WorstCase\n3.TypicalCase(random number array)");
+	scanf("%d",&i);
+	switch(i) {
+        case 1:
+            for(i = 0; i < N; i++)
+                a[i] = i;
+            break;
+
+        case 2:
+            for(i = 0; i < N; i++)
+                a[i] = N - i - 1;
+            break;
+
+        case 3:
+            for(i = 0; i < N; i++)
+                a[i] = rand() % N;
+	}
+	printf("1.BSort\n2.InsertionSort\n3.MergeSort\n4.QuickSort");
+	scanf("%d",&i);
+	switch(i) {
+        case 1:
+            bSort();
+            break;
+
+        case 2:
+            insertionSort();
+            break;
+
+        case 3:
+            mergeSort(0, N-1);
+            break;
+
+        case 4:
+            quickSort(0, N-1);
+	}
+	system("clear");
+	display(-1);
+}
+
         temp[index] = a[i];
         i++;
         index++;
