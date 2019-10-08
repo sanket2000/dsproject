@@ -1,5 +1,4 @@
 #include<stdio.h>
-#include<stdlib.h>
 #define KGRN  "\x1B[32m"
 #define KWHT  "\x1B[37m"
 #define N 75
