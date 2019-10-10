@@ -1,7 +1,7 @@
 #include<stdio.h>
 #define KGRN  "\x1B[32m"
 #define KWHT  "\x1B[37m"
-#define N 75
+#define N 57
 
 int a[N];
 
@@ -114,12 +114,20 @@ int partition(int low, int high) {
     while(i <= j) {
         while(a[i] <= x && i <= high) {
             i++;
+            system("clear");
+            display(i);
         }
         while(a[j] > x) {
             j--;
+            system("clear");
+            display(j);
         }
         if(i < j) {
             swap(i, j);
+            system("clear");
+            display(i);
+            system("clear");
+            display(j);
         }
     }
     a[low] = a[j];
@@ -185,86 +193,4 @@ int main() {
 	}
 	system("clear");
 	display(-1);
-}
-
-        temp[index] = a[i];
-        i++;
-        index++;
-    }
-    index = 0;
-    for(i = beg; i <= end; i++, index++)
-        a[i] = temp[index];
-    system("clear");
-    display();
-}
-
-void mergeSort(int beg, int end) {
-    if(beg < end) {
-        int mid = (beg + end) / 2;
-        mergeSort(beg, mid);
-        mergeSort(mid + 1, end);
-        merge(beg, mid, end);
-    }
-}
-
-int partition(int low, int high) {
-    int i, j, x;
-    i = low;
-    x = a[low];
-    j = high;
-    while(i <= j) {
-        while(a[i] <= x && i <= high) {
-            i++;
-        }
-        while(a[j] > x) {
-            j--;
-        }
-        if(i < j) {
-            swap(i, j);
-        }
-    }
-    a[low] = a[j];
-    a[j] = x;
-    system("clear");
-    display();
-    return j;
-}
-
-void quickSort(int low, int high) {
-    int j;
-    if(low < high) {
-        j = partition(low, high);
-        quickSort(low, j-1);
-        quickSort(j+1, high);
-    }
-}
-
-int main() {
-	//for(int j=0 ; j<N ; j++)
-		//scanf("%d",&a[j]);
-    int i;
-    for(i = 0; i < N; i++)
-        a[i] = N - i - 1;
-	system("clear");
-	printf("cleared\n");
-	display();
-	system("clear");
-	printf("1.BSort\n2.InsertionSort\n3.MergeSort\n4.QuickSort");
-	scanf("%d",&i);
-	switch(i) {
-        case 1:
-            bSort();
-            break;
-
-        case 2:
-            insertionSort();
-            break;
-
-        case 3:
-            mergeSort(0, N-1);
-            break;
-
-        case 4:
-            quickSort(0, N-1);
-	}
 }
