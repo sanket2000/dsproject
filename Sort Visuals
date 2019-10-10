@@ -5,19 +5,20 @@
 
 int a[N];
 
-void display(int k) {
+void display(int k1, int k2, int k3, int t) {
+    system("clear");
     for(int i = 0; i<N; i++) {
         printf("%3d ",a[i]);
         for(int j = 0; j<a[i]; j++)
-            if(k == i) {
+            if(k1 == i || k2==i || k3==i) {
                 //textcolor(4);
                 printf(" %sS",KGRN);
             } else
-                printf(" %s*",KWHT);
+                printf(" %s.",KWHT);
         printf("\n");
     }
     //sleep();
-    int d = 10000000;
+    int d = t*1000000;
     for(int i = 0; i < d; i++) {}
 }
 
@@ -32,8 +33,7 @@ void bSort() {
         for(int j = 0; j < N - 1 - i; j++) {
             if(a[j] > a[j+1]) {
                 swap(j, j+1);
-                system("clear");
-                display(j+1);
+                display(j, j+1, -1, 6);
             }
         }
     }
@@ -47,8 +47,8 @@ void insertionSort() {
         while(a[j] > temp && j >= 0) {
             a[j+1] = a[j];
             j--;
-            system("clear");
-            display(j+1);
+            display(j+1, i, -1, 6);
+            //display(i, -1, -1, 1);
         }
         a[j+1] = temp;
         //system("clear");
@@ -65,13 +65,11 @@ void merge(int beg, int mid, int end) {
         if(a[i] < a[j]) {
             temp[index] = a[i];
             i++;
-            system("clear");
-            display(i);
+            display(i, j, -1, 20);
         }else {
             temp[index] = a[j];
             j++;
-            system("clear");
-            display(j);
+            display(i, j, -1, 20);
         }
         index++;
     }
@@ -79,21 +77,18 @@ void merge(int beg, int mid, int end) {
         temp[index] = a[j];
         j++;
         index++;
-        system("clear");
-        display(j);
+        display(j, -1, -1, 20);
     }
     while(i <= mid) {
         temp[index] = a[i];
         i++;
         index++;
-        system("clear");
-        display(i);
+        display(i, -1, -1, 20);
     }
     index = 0;
     for(i = beg; i <= end; i++, index++) {
         a[i] = temp[index];
-        system("clear");
-        display(i);
+        display(i, -1, -1, 30);
     }
 }
 
@@ -115,25 +110,25 @@ int partition(int low, int high) {
         while(a[i] <= x && i <= high) {
             i++;
             system("clear");
-            display(i);
+            ///display(i);
         }
         while(a[j] > x) {
             j--;
             system("clear");
-            display(j);
+            ///display(j);
         }
         if(i < j) {
             swap(i, j);
             system("clear");
-            display(i);
+            ///display(i);
             system("clear");
-            display(j);
+            ///display(j);
         }
     }
     a[low] = a[j];
     a[j] = x;
     system("clear");
-    display(j);
+    ///display(j);
     return j;
 }
 
@@ -154,7 +149,7 @@ int main() {
         //a[i] = rand() % N;//N - i - 1;
 	system("clear");
 	printf("cleared\n");
-	display(-1);
+	///display(-1);
 	system("clear");
 	printf("1.BestCase\n2.WorstCase\n3.TypicalCase(random number array)");
 	scanf("%d",&i);
@@ -191,6 +186,5 @@ int main() {
         case 4:
             quickSort(0, N-1);
 	}
-	system("clear");
-	display(-1);
+	display(-1, -1, -1, 0);
 }
