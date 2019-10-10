@@ -156,7 +156,7 @@ int main() {
 	printf("cleared\n");
 	display(-1);
 	system("clear");
-	printf("1.BestCase not for mergeSort ;)\n2.WorstCase\n3.TypicalCase(random number array)");
+	printf("1.BestCase\n2.WorstCase\n3.TypicalCase(random number array)");
 	scanf("%d",&i);
 	switch(i) {
         case 1:
