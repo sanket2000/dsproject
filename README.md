@@ -6,3 +6,7 @@ This repo contains two projects,
 # 1.Calculator
 
 # 2.Visualizing 4 main Sorting algorithms in C language
+-Bubble sort
+-Insertion sort
+-Merge sort
+-Quick sort
