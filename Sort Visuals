@@ -1,7 +1,10 @@
 #include<stdio.h>
+#include<stdlib.h>
+#include<time.h>
+
 #define KGRN  "\x1B[32m"
 #define KWHT  "\x1B[37m"
-#define N 57
+#define N 45
 
 int a[N];
 
@@ -14,7 +17,7 @@ void display(int k1, int k2, int k3, int t) {
                 //textcolor(4);
                 printf(" %sS",KGRN);
             } else
-                printf(" %s.",KWHT);
+                printf(" %s*",KWHT);
         printf("\n");
     }
     //sleep();
@@ -47,12 +50,9 @@ void insertionSort() {
         while(a[j] > temp && j >= 0) {
             a[j+1] = a[j];
             j--;
-            display(j+1, i, -1, 6);
-            //display(i, -1, -1, 1);
+            display(j+1, i, -1, 3);
         }
         a[j+1] = temp;
-        //system("clear");
-        //display(j);
     }
 }
 
@@ -110,25 +110,21 @@ int partition(int low, int high) {
         while(a[i] <= x && i <= high) {
             i++;
             system("clear");
-            ///display(i);
+            display(i, -1, -1, 10);
         }
         while(a[j] > x) {
             j--;
             system("clear");
-            ///display(j);
+            display(j, -1, -1, 10);
         }
         if(i < j) {
             swap(i, j);
-            system("clear");
-            ///display(i);
-            system("clear");
-            ///display(j);
+            display(i, j, -1, 10);
         }
     }
     a[low] = a[j];
     a[j] = x;
-    system("clear");
-    ///display(j);
+    display(j, -1, -1, 50);
     return j;
 }
 
@@ -141,18 +137,39 @@ void quickSort(int low, int high) {
     }
 }
 
+int issorted() {
+    int i, count=0;
+    for(i = 0; i < N-1; i++) {
+        if(a[i] < a[i+1])
+            count++;
+    }
+    if(count == (N-1))
+        return 1;
+    return 0;
+}
+
+void randomsort() {
+    while(!issorted()) {
+        int i;
+        i = rand() % N;
+        if(i == N-1)
+            i--;
+        if(a[i] > a[i+1]) {
+            swap(i, i+1);
+            display(i, i+1, -1, 7);
+        }
+    }
+}
+
 int main() {
-	//for(int j=0 ; j<N ; j++)
-		//scanf("%d",&a[j]);
-    int i;
-    //for(i = 0; i < N; i++)
-        //a[i] = rand() % N;//N - i - 1;
+    int i, j;
 	system("clear");
 	printf("cleared\n");
 	///display(-1);
 	system("clear");
 	printf("1.BestCase\n2.WorstCase\n3.TypicalCase(random number array)");
 	scanf("%d",&i);
+	srand(time(NULL));
 	switch(i) {
         case 1:
             for(i = 0; i < N; i++)
@@ -165,10 +182,18 @@ int main() {
             break;
 
         case 3:
-            for(i = 0; i < N; i++)
+            for(i = 0; i < N; i++) {
                 a[i] = rand() % N;
+                for(j = 0; j < i; j++) {
+               	    if(a[j] == a[i]) {
+                	i--;
+                	break;
+                    }
+                }
+            }
 	}
-	printf("1.BSort\n2.InsertionSort\n3.MergeSort\n4.QuickSort");
+    display(-1, -1, -1, 0);
+	printf("1.BSort\n2.InsertionSort\n3.MergeSort\n4.QuickSort\n5.Randomsort");
 	scanf("%d",&i);
 	switch(i) {
         case 1:
@@ -185,6 +210,10 @@ int main() {
 
         case 4:
             quickSort(0, N-1);
+            break;
+
+        case 5:
+            randomsort();
 	}
 	display(-1, -1, -1, 0);
 }
